@@ -1,0 +1,47 @@
+﻿
+<div class="bg-white border justify-content-center">
+    <table class="table">
+
+        <thead class="table-secondary text-center">
+            <tr>
+                <th scope="col">AccountType</th>
+                <th scope="col">Account POC</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Status</th>
+                <th scope="col">Open Request</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            @if (item.AccountTypeid != 2)
+            {
+
+                <tbody class="text-center">
+                    <tr>
+                        <td>@item.AccountType</td>
+                        <td>@item.AccountType</td>
+                        @if (item.phonenum != null)
+                        {
+                            <td>@item.phonenum</td>
+                        }
+                        else
+                        {
+                            <td>(NON)NNN-NNNNNN</td>
+                        }
+                        <td>@item.status</td>
+                        <td>0</td>
+                        @if (item.AccountTypeid == 2)
+                        {
+                            <td><a class="btn btn-outline-info" asp-action="PhysicanProfile" asp-controller="AdminDash" asp-route-id="@item.useraccessid">Edit</a></td>
+                        }
+                        else
+                        {
+                            <td><a class="btn btn-outline-info" asp-action="EditProfile" asp-controller="AdminDash" asp-route-adminid="@item.useraccessid">Edit</a></td>
+                        }
+                    </tr>
+                </tbody>
+            }
+        }
+    </table>
+</div>

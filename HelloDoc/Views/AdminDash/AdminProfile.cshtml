@@ -1,0 +1,298 @@
+﻿@model DAL.ViewModel.AdminProfile
+@{
+    ViewData["Title"] = "AdminProfile";
+    Layout = "~/Views/Shared/_AdminDash.cshtml";
+}
+
+
+<div class="container-fluid bg-body-secondary  mb-3">
+<div class="container bg-body-secondary px-0  backbtn d-flex align-items-center py-3  justify-content-between">
+
+    <h4 class="text-body align-middle my-0 ">My Profile</h4>
+    <a class="p-2 border text-decoration-none border-info rounded bg-body-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="16"
+             height="16"
+             fill="currentColor"
+             class="bi bi-chevron-left"
+             viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+        </svg>
+        <span class="mx-2 text-info">Back</span>
+    </a>
+</div>
+<div class="container p-sm-3    shadow rounded-3 white-bag">
+    <form class="form-floating" method="post" asp-action="AccountInformation" asp-controller="AdminDash">
+        <div class="row gx-4">
+            <h4 class="text-body">Account Information</h4>
+            <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                <input type="text"
+                       asp-for="UserName"
+                       class="form-control shadow-none"
+                       placeholder="UserName" disabled />
+                <label for="floatingInput" class="ms-2">UserName</label>
+
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                <input type="password"
+                       asp-for="Password"
+                       class="form-control shadow-none"
+                       placeholder="Password" />
+                <label for="floatingInput" class="ms-2">Password</label>
+
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+
+                <select class="form-control py-2" name="SelectedStateId">
+                    <option selected>Select Status</option>
+                    @*  <option>Select State</option>
+                    @foreach (var state in Model.Regions)
+                    {
+                    <option value="@state.RegionId">@state.Name</option>
+                    } *@
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+
+                <select class="form-control py-2"
+                    <option selected>Select Role</option>
+                    @*@foreach (var state in Model.Region)
+                    {
+                    <option value="@state.RegionId">@state.Name</option>
+                    }*@
+                </select>
+            </div>
+            <div class="my-3 d-flex justify-content-end">
+                <button type="submit" class="btn btn-outline-info px-3 py-2">Reset Password</button>
+            </div>
+
+
+    </form>
+</div>
+<h4 class="text-body">Administrator Information</h4>
+<form method="post" asp-action="AdministratorInformation" asp-controller="AdminDash">
+    <div class="row gx-4">
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="text"
+                   asp-for="FirstName"
+                   class="form-control shadow-none changable"
+                   placeholder="FirstName" disabled />
+            <label for="floatingInput" class="ms-2">FirstName</label>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="text"
+                   asp-for="LastName"
+                   class="form-control shadow-none changable"
+                   placeholder="LastName" disabled />
+            <label for="floatingInput" class="ms-2">LastName</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="email"
+                   asp-for="Email"
+                   class="form-control shadow-none changable"
+                   placeholder="Email" disabled />
+            <label for="floatingInput" class="ms-2">Email</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="email"
+                   asp-for="ConfirmEmail"
+                   class="form-control shadow-none changable"
+                   placeholder="Confirmemail" disabled />
+            <label for="floatingInput" class="ms-2">Confirm Email</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="tel"
+                   asp-for="PhoneNumAspNetUsers"
+                   class="form-control shadow-none changable"
+                   placeholder="phone" disabled />
+            <label for="floatingInput" class="ms-2">Phone No.</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 my-3 ">
+
+            @{
+                var i = 0;
+            }
+            @foreach (var state in Model.Regions)
+            {
+                if (i < Model.statesForChecked.Count && state.RegionId == Model.statesForChecked[i].Value)
+                {
+                    <input class="form-check-input text-body changable" name="states" for="box1" type="checkbox" id="@state.RegionId"
+                           value="@state.RegionId" checked disabled />
+                    <label class="form-check-label fs-6" for="states">
+                        @state.Name
+                    </label>
+                    i++;
+                }
+                else
+                {
+                    <input class="form-check-input text-body changable" name="states" for="box1" type="checkbox" id="@state.RegionId"
+                           value="@state.RegionId" disabled />
+                    <label class="form-check-label fs-6" for="states">
+                        @state.Name
+                    </label>
+                }
+
+            }
+
+        </div>
+        <div class="d-flex justify-content-end ">
+            <button onclick="toggleEdit()" type="button" class="btn border-none bg-info p-3 text-light fw-semibold me-4" id="EditBtn">
+                Edit
+            </button>
+            <button onclick="toggleSave()" type="submit" class="btn border-none bg-info p-3 text-light fw-semibold me-4" id="SaveBtn">
+                Save
+            </button>
+            <button onclick="toggleCancel()" type="button" class="btn border-none bg-danger p-3 text-light fw-semibold me-4" id="CancelBtn">
+                Cancle
+            </button>
+        </div>
+</form>
+    </div>
+<h4 class="text-body">Mailing & Billing Information</h4>
+<form asp-action="MailingBillingInformation" method="post">
+    <div class="row gx-4">
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="text"
+                   asp-for="Address1"
+                   class="form-control shadow-none changable1"
+                   placeholder="UserName" disabled />
+            <label for="floatingInput" class="ms-2">Address1</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="text"
+                   asp-for="Address2"
+                   class="form-control shadow-none changable1"
+                   placeholder="Password" disabled />
+            <label for="floatingInput" class="ms-2">Address2</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="text"
+                   asp-for="City"
+                   class="form-control shadow-none changable1"
+                   placeholder="Password" disabled />
+            <label for="floatingInput" class="ms-2">City</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+
+            <select class="form-control py-2 changable1" name="SelectedStateId" asp-for="state" disabled>
+
+                @foreach (var state in Model.Regions)
+                {
+                    <option value="@state.RegionId">@state.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="text"
+                   asp-for="zip"
+                   class="form-control shadow-none changable1"
+                   placeholder="Password" disabled />
+            <label for="floatingInput" class="ms-2">Zip</label>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+            <input type="text"
+                   asp-for="MobileNumAdmin"
+                   class="form-control shadow-none changable1"
+                   placeholder="Password" disabled />
+            <label for="floatingInput" class="ms-2">Mobile Num</label>
+        </div>
+        <div class="d-flex justify-content-end my-1">
+            <button onclick="toggleEdit1()" type="button" class="btn border-none bg-info p-3 text-light fw-semibold me-4" id="EditBtn1">
+                Edit
+            </button>
+            <button onclick="toggleSave1()" type="submit" class="btn border-none bg-info p-3 text-light fw-semibold me-4" id="SaveBtn1">
+                Save
+            </button>
+            <button onclick="toggleCancel1()" type="button" class="btn border-none bg-danger p-3 text-light fw-semibold me-4" id="CancelBtn1">
+                Cancle
+            </button>
+        </div>
+</form>
+            </div>
+        </div>
+</div>
+</div>
+
+
+
+<!-- jQuery script -->
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+    $("#CancelBtn").hide();
+    $("#SaveBtn").hide();
+
+
+    function toggleEdit() {
+
+        var inputFields = document.querySelectorAll('.changable');
+
+
+        inputFields.forEach(function (input) {
+            input.disabled = !input.disabled;
+        });
+
+        $("#CancelBtn").show();
+        $("#EditBtn").hide();
+        $("#SaveBtn").show();
+    }
+
+
+    function toggleCancel() {
+        var inputFields = document.querySelectorAll('.changable');
+
+        // Toggle the disabled attribute for each input field
+        inputFields.forEach(function (input) {
+            input.disabled = !input.disabled;
+        });
+
+        $("#EditBtn").show();
+        $("#CancelBtn").hide();
+        $("#SaveBtn").hide();
+    }
+
+    $("#CancelBtn1").hide();
+    $("#SaveBtn1").hide();
+
+
+    function toggleEdit1() {
+
+        var inputFields = document.querySelectorAll('.changable1');
+
+
+        inputFields.forEach(function (input) {
+            input.disabled = !input.disabled;
+        });
+
+        $("#CancelBtn1").show();
+        $("#EditBtn1").hide();
+        $("#SaveBtn1").show();
+    }
+
+
+    function toggleCancel1() {
+        var inputFields = document.querySelectorAll('.changable1');
+
+        // Toggle the disabled attribute for each input field
+        inputFields.forEach(function (input) {
+            input.disabled = !input.disabled;
+        });
+
+        $("#EditBtn1").show();
+        $("#CancelBtn1").hide();
+        $("#SaveBtn1").hide();
+    }
+
+</script>
+    

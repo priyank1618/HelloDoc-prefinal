@@ -1,0 +1,53 @@
+﻿@model List<DAL.DataModels.Role>
+@{
+    ViewData["Title"] = "AccountAccess";
+    Layout = "~/Views/Shared/_AdminDash.cshtml";
+}
+
+
+
+@* ---------------------------------- *@
+<div class="container-fluid  bg-body-secondary">
+    <div class="container" style="height:80vh !important">
+        <div class="justify-content-between d-flex  container-fluid mb-2 position-relative ">
+            <div class="mt-3">
+                <h3> Account Access </h3>
+            </div>
+            <div>
+                <a asp-action="AdminDash" class="btn btn-outline-info mt-3"> ❮  Back </a>
+            </div>
+        </div>
+        <div class="card border-0 shadow p-4 mb-5 rounded">
+            <div class="d-flex justify-content-end ps-3">
+                <a asp-action="CreateAccess"><button class="btn btn-outline-info mb-3 float-end">Create Access</button></a>
+            </div>
+
+            @* ---------------------------------- *@
+
+            <div class="bg-white border justify-content-center">
+                <table class="table">
+
+                    <thead class="table-secondary text-center">
+                        <tr>
+                            <th>Name</th>
+                            <th>AccountType</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+
+                        <tbody class="text-center">
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.AccountType</td>
+                                <td>
+                                    <a class="btn btn-outline-info" asp-action="EditAccess" asp-route-roleid="@item.RoleId">Edit</a>
+                                    <a class="btn btn-outline-info" asp-action="DeleteRole" asp-route-id="@item.RoleId">Delete</a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>

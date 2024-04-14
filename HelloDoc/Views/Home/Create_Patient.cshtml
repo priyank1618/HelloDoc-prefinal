@@ -1,0 +1,103 @@
+﻿@model DAL.ViewModel.CreateAccount
+
+@{
+     ViewData["Title"] = "Create_Patient";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Login Page</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Patient_login.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HelloDoc.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col col-lg-6 col-sm-12 main-img">
+                <img src="../images/11116016_415.jpg" alt="" class="img-fluid" />
+            </div>
+
+            <div class="col col-lg-6 col-sm-12 text-center right-side">
+                <button class="dark-button float-end border border-info bg-white">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="30"
+                         height="35"
+                         fill="currentColor"
+                         class="bi bi-moon text-info m-auto p-2"
+                         viewBox="0 0 16 16">
+                        <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
+                    </svg>
+                </button>
+
+                <!-- doct img -->
+                <div class="logo mt-5">
+                    <img src="../images/doct-logo.jpg" alt="" />
+                </div>
+
+                <!-- login form -->
+                <div>
+                    <a asp-action="index" class="text-info fs-5 mt-4 back">
+                        <span class="fs-4"><</span>
+                        <span> Back</span>
+                    </a>
+
+                    <h1>Create account</h1>
+
+                    <form asp-controller="Home" asp-action="Create_Patient" method="post">
+                    <div class="inp">
+                        <div class="form-floating d-flex mb-3 border rounded inps">
+                            <input type="text"
+                                  asp-for="Email"
+                                   class="form-control border-0 no-border"
+                                   id="floatingInput"
+                                   placeholder="name@example.com"  readonly/>
+                            <img src="../images/user_circle.svg"
+                                 alt=""
+                                 class="pe-3 bg-white" />
+                            <label for="floatingInput">Email</label>
+                        </div>
+                        <div class="form-floating d-flex mb-3 border rounded">
+                            <input type="password"
+                                    asp-for="Password"
+                                   class="form-control border-0 no-border"
+                                   id="floatingPassword"
+                                   placeholder="Password" />
+                            <img src="../images/password_icon.svg"
+                                 alt=""
+                                 class="pe-3 bg-white" />
+                            <label for="floatingPassword">Password</label>
+                        </div> <div class="form-floating d-flex mb-3 border rounded">
+                            <input type="password"
+                                       asp-for="ConfirmPassword"
+                                   class="form-control border-0 no-border"
+                                   id="floatingPassword"
+                                   placeholder="Password" />
+                            <img src="../images/password_icon.svg"
+                                 alt=""
+                                 class="pe-3 bg-white" />
+                            <label for="floatingPassword">Confirm Password</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-info text-white" type="submit">Create</button>
+                    </form>
+                <div asp-validation-summary="All"> </div>
+                </div>
+                <!-- ------------------- -->
+            </div>
+            <footer class="text-muted text-center position-absolute bottom-0">
+                <span>Terms of condition |</span>
+                <span>Privacy policy</span>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

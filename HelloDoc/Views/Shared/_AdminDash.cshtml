@@ -1,0 +1,783 @@
+﻿@{
+    string userName = ViewBag.username;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HelloDoc</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/AdminDash.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HelloDoc.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row border border-bottom shadow">
+                <!-- -----------------nav--------------- -->
+                <div class="col col-12 d-flex mb-1 flex-row justify-content-between">
+
+                    <nav class="navbar d-inline d-sm-none mt-3">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </div>
+                    </nav>
+                    <div class="doct-logo d-none d-sm-inline">
+                        <img src="~/images/doct-logo-2.png" alt="" style="height:4rem" />
+                    </div>
+
+                    <div class=" float-end ">
+                        <span class="fw-bold me-2 d-none d-sm-inline">Welcome:@userName</span>
+                        <a asp-action="Logout" asp-controller="Login">
+
+                            <button type="submit" class="btn border-info bg-white fw-2 text-info me-2 border border-2"
+                                    style="height:3rem">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="33" fill="currentColor" class="bi text-info bi-box-arrow-right d-inline d-sm-none" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                </svg>
+                                <span class="d-none d-sm-inline">logout</span>
+
+                            </button>
+                        </a>
+
+                        <button class="dark-button border border-2 border-info bg-white my-3 mx-2" id="theme-toggle">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="35"
+                                 height="39"
+                                 fill="currentColor"
+                                 class="bi bi-moon text-info p-1 m-auto type-bold"
+                                 viewBox="0 0 16 16">
+                                <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- -----------------nav--------------- -->
+
+            </div>
+            <!-- Nav tabs -->
+
+            <div class="w-100 shadow  px-2 px-md-5  pt-2  border-5 border-bottom-5 d-none d-sm-block pb-1  ">
+                <ul class="nav nav-tabs-info nav-underline   fs-4 " id="pills-tab" role="tablist">
+                    <li class="nav-item ">
+                        <a asp-action="AdminDash" asp-controller="AdminDash" style="text-decoration:none">
+                            <button class="nav-link  text-info
+                     @(ViewContext.ActionDescriptor.RouteValues["action"] == "AdminDash" ? "active" : "")">
+                                Dashboard
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a asp-action="ProviderLocation" class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "ProviderLocation" ? "active" : "")">Provider Location</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="AdminProfile" asp-controller="AdminDash" style="text-decoration:none">
+                            <button class="nav-link text-info
+                            @(ViewContext.ActionDescriptor.RouteValues["action"] == "AdminProfile" ? "active" : "")">
+                                My Profile
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Provider" || ViewContext.ActionDescriptor.RouteValues["action"] == "CreateProviderAccount"
+                        || ViewContext.ActionDescriptor.RouteValues["action"] == "PhysicianScheduling"? "active" : "")" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Provider
+                        </a>
+                        <ul class="dropdown-menu ">
+                            <li><a asp-action="Provider" asp-controller="AdminDash" class="dropdown-item ">Provider</a></li>
+                            <li><a asp-action="PhysicianScheduling" class="dropdown-item">Scheduling</a></li>
+                            <li><a class="dropdown-item">Invoice</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Partners" class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Partners" ? "active" : "")">Partners</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  text-info 
+
+                        @(new string[] { "UserAccess", "CreateAdminAccount", "AccountAccess" }
+                            .Contains(ViewContext.ActionDescriptor.RouteValues["action"]) ? "active" : "")"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Access
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-action="UserAccess" class="dropdown-item">User Access</a></li>
+                            <li><a asp-action="AccountAccess" class="dropdown-item">Account Access</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  text-info
+                        @(new string[] { "Records", "SearchRecords", "PatientHistory", "BlockHistory" }
+                        .Contains(ViewContext.ActionDescriptor.RouteValues["action"]) ? "active" : "")" 
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false"> Records </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-action="SearchRecords" class="dropdown-item ">Search Records</a></li>
+                            <li><a class="dropdown-item">Email Logs</a></li>
+                            <li><a class="dropdown-item">SMS Logs</a></li>
+                            <li><a asp-action="PatientHistory" class="dropdown-item">Patient Records</a></li>
+                            <li><a asp-action="BlockHistory" class="dropdown-item">Blocked History</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="collapse " id="navbarToggleExternalContent">
+                <div class=" p-4">
+                    <ul class="nav nav-tabs-info nav-underline   fs-4 " id="pills-tab" role="tablist">
+                        <li class="nav-item text-info">
+                            <a asp-action="AdminDash" asp-controller="AdminDash" style="text-decoration:none"> <button class="nav-link  text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Index" ? "active" : "")">Dashboard</button></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a asp-action="ProviderLocation" class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "ProviderLocation" ? "active" : "")">Provider Location</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="AdminProfile" asp-controller="AdminDash" style="text-decoration:none"><button class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Profile" ? "active" : "")">My Profile</button></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Provider" ? "active" : "")">Provider</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Partners" ? "active" : "")">Parteners</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Records" ? "active" : "")">Records</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+    </header>
+    <div class="container-fluid pb-5  rounded-3 shadow">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer   bg-dark text-white pe-3 footer position-absolute  w-100 align-middle bottom-0 " style="height: 6vh !important;">
+        <div class="d-flex flex-row justify-content-end align-items-center my-auto h-100 py-auto w-100">
+            <span>Terms Of Condition | Privacy Policy</span>
+        </div>
+    </footer>
+
+
+   
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Patient_request.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> 
+   *@
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="~/js/UserAccess.js"></script>
+    <script src="~/js/Partner.js"></script>
+
+  
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var currentpage = 1;
+            var pagesize = 4;
+
+            // Function to retrieve data from local storage
+            function getDataFromLocalStorage(key) {
+                return localStorage.getItem(key);
+            }
+
+            // Function to store data in local storage
+            function setDataInLocalStorage(key, value) {
+                localStorage.setItem(key, value);
+            }
+
+            function setStylesFromLocalStorage() {
+
+                // Get the stored state from local storage
+                var textSpanState = localStorage.getItem('textspanState');
+                var triangleDisplayState = localStorage.getItem('triangleDisplayState');
+                var DisplayState = localStorage.getItem('DisplayState');
+                var BorderStyle = localStorage.getItem('BorderStyle');
+                var ida = localStorage.getItem('id');
+
+                // Set the text and styles based on the stored state
+                if (textSpanState) {
+                    $('#textspan').text(textSpanState);
+                }
+                if (triangleDisplayState) {
+                    $('.triangle').css('display', triangleDisplayState);
+                }
+                if (DisplayState) {
+
+                    $(ida).css('display', DisplayState);
+
+                }
+                if (BorderStyle) {
+                    $(ida).css('border-top', BorderStyle);
+                }
+            }
+
+            // Initialize variables with default values or retrieve from local storage
+            var currentPartialview = getDataFromLocalStorage("currentPartialview") || "AdminTableNew";
+            var currentstatus = JSON.parse(getDataFromLocalStorage("currentstatus")) || [1];
+
+            // Set initial values in local storage
+            setDataInLocalStorage("currentPartialview", currentPartialview);
+            setDataInLocalStorage("currentstatus", JSON.stringify(currentstatus));
+
+            $('.triangle').css('display', 'none');
+            //  $('#tranew').css('display', 'block').css('border-top', '20px solid #203f9a').css('color', 'white');
+
+
+            filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+            $('AdminTablePending').hide();
+            $('AdminTableActive').hide();
+            $('AdminTableConclude').hide();
+            $('AdminTableToClose').hide();
+            $('AdminTableUnPaid').hide();
+
+
+            function updateActiveElement(id) {
+                $(".status").removeClass("active");
+                $(id).addClass("active");
+                localStorage.setItem('activeElement', id); // Save active element to local storage
+            }
+
+            // Click event handlers
+            $("#divnew").click(function () {
+                updateActiveElement("#divnew");
+            });
+
+            $("#divpen").click(function () {
+                updateActiveElement("#divpen");
+            });
+
+            $("#divact").click(function () {
+                updateActiveElement("#divact");
+            });
+
+            $("#divcon").click(function () {
+                updateActiveElement("#divcon");
+            });
+
+            $("#divclo").click(function () {
+                updateActiveElement("#divclo");
+            });
+
+            $("#divun").click(function () {
+                updateActiveElement("#divun");
+            });
+
+            // On page load, check if there's a previously active element in local storage and set i
+            var activeElement = localStorage.getItem('activeElement');
+            if (activeElement) {
+                $(activeElement).addClass("active");
+            }
+
+            $(document).on("click", "#pagination a.page-link", function () {
+                console.log("Pagination link clicked!");
+                var id = $(this).attr("id");
+                currentpage = $("#" + id).data("page");
+                console.log("Current Page: " + currentpage);
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+            });
+
+
+            // -------------------------
+            $("#exportExcleFile, #exportall").click(function () {
+                let downloadUrl = `/AdminDash/ExportRequests?currentstatus=${currentstatus}`;
+
+                if ($(this).attr("id") === "exportExcleFile") {
+                    downloadUrl += `&pagesize=${pagesize}&currentpage=${currentpage}`;
+                }
+
+                window.location.href = downloadUrl;
+            });
+            // -------------------------
+
+            //-------------------on click functionality------------------------------
+
+            $("#New").click(function () {
+                currentstatus = [1];
+                currentPartialview = "AdminTableNew";
+                setDataInLocalStorage("currentstatus", JSON.stringify(currentstatus));
+                setDataInLocalStorage("currentPartialview", currentPartialview);
+                $("#Search").val("");
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+                // $('#textspan').text('(new)');
+                // $('.triangle').css('display', 'none');
+                // $('#tranew').css('display', 'block').css('border-top', '20px solid #203f9a').css('color', 'white');
+
+                localStorage.setItem('textspanState', '(new)');
+                localStorage.setItem('triangleDisplayState', 'none');
+                localStorage.setItem('DisplayState', 'block');
+                localStorage.setItem('BorderStyle', '20px solid #203f9a');
+                localStorage.setItem('id', '#tranew');
+                setStylesFromLocalStorage();
+            });
+
+
+            $("#Pending").click(function () {
+
+                currentPartialview = "AdminTablePending";
+                currentstatus = [2];
+                setDataInLocalStorage("currentstatus", JSON.stringify(currentstatus));
+                setDataInLocalStorage("currentPartialview", currentPartialview);
+                $("#Search").val("");
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+                // $('#textspan').text('(pending)');
+                // $('.triangle').css('display', 'none');
+                // $('#trapending').css('display', 'block').css('border-top', '20px solid  #0dcaf0');
+                localStorage.setItem('textspanState', '(pending)');
+                localStorage.setItem('triangleDisplayState', 'none');
+                localStorage.setItem('DisplayState', 'block');
+                localStorage.setItem('BorderStyle', '20px solid #0dcaf0');
+                localStorage.setItem('id', '#trapending');
+
+                setStylesFromLocalStorage();
+
+            });
+
+            $("#Active").click(function () {
+                currentPartialview = "AdminTableActive";
+                currentstatus = [4, 5];
+                setDataInLocalStorage("currentstatus", JSON.stringify(currentstatus));
+                setDataInLocalStorage("currentPartialview", currentPartialview);
+                $("#Search").val("");
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+                localStorage.setItem('textspanState', '(active)');
+                localStorage.setItem('triangleDisplayState', 'none');
+                localStorage.setItem('DisplayState', 'block');
+                localStorage.setItem('BorderStyle', '20px solid #228c20');
+                localStorage.setItem('id', '#traact');
+                setStylesFromLocalStorage();
+            });
+
+
+            $("#Conclude").click(function () {
+                currentPartialview = "AdminTableConclude";
+                currentstatus = [6];
+                setDataInLocalStorage("currentstatus", JSON.stringify(currentstatus));
+                setDataInLocalStorage("currentPartialview", currentPartialview);
+                $("#Search").val("");
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+                localStorage.setItem('textspanState', '(Conclude)');
+                localStorage.setItem('triangleDisplayState', 'none');
+                localStorage.setItem('DisplayState', 'block');
+                localStorage.setItem('BorderStyle', '20px solid #da0f82');
+                localStorage.setItem('id', '#tracon');
+                setStylesFromLocalStorage();
+            });
+
+            $("#ToClose").click(function () {
+                currentPartialview = "AdminTableToClose";
+                currentstatus = [3, 7, 8];
+                setDataInLocalStorage("currentstatus", JSON.stringify(currentstatus));
+                setDataInLocalStorage("currentPartialview", currentPartialview);
+                $("#Search").val("");
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+                localStorage.setItem('textspanState', '(To Close)');
+                localStorage.setItem('triangleDisplayState', 'none');
+                localStorage.setItem('DisplayState', 'block');
+                localStorage.setItem('BorderStyle', '20px solid #0370d7');
+                localStorage.setItem('id', '#traclo');
+                setStylesFromLocalStorage();
+            });
+
+            $("#UnPaid").click(function () {
+                currentPartialview = "AdminTableUnPaid";
+                currentstatus = [9];
+                setDataInLocalStorage("currentstatus", JSON.stringify(currentstatus));
+                setDataInLocalStorage("currentPartialview", currentPartialview);
+                $("#Search").val("");
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+                localStorage.setItem('textspanState', '(Unpaid)');
+                localStorage.setItem('triangleDisplayState', 'none');
+                localStorage.setItem('DisplayState', 'block');
+                localStorage.setItem('BorderStyle', '20px solid #9966cd');
+                localStorage.setItem('id', '#traun');
+                setStylesFromLocalStorage();
+            });
+            setStylesFromLocalStorage();
+            //-------------------on click functionality end------------------------------
+
+            $('.form-select').on("change", function () {
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize)
+            });
+
+            // -------------filter btn-----------------------------
+            $('.filter-btn').click(function () {
+                currentpage = 1;
+                $('.filter-btn').removeClass('active')
+                $(this).addClass('active')
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize)
+
+            });
+            // -------------filter btn end -----------------------------
+
+            // -------on search value--------------------
+            $("#Search").on("input", function () {
+                currentpage = 1;
+                filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+            });
+            // -------on search value end---------------------
+
+            function filtertable(partialName, currentstatus, currentpage, pagesize) {
+                $.get('/AdminDash/CheckSession', function (session) {
+
+
+                    if (session.sessionExists) {
+                        var SearchValue = $("#Search").val();
+                        var Filterselect = $('.filter-btn.active').data('value');
+
+                        console.log(Filterselect);
+                        var selectopt = $(".form-select").find(':selected');
+                        var selectvalue = selectopt.data('value');
+
+                        var region = $("#Region").val();
+
+
+                        if (SearchValue == "" && Filterselect == " ") {
+                            filtertable(currentPartialview, currentstatus, currentpage, pagesize);
+                        }
+
+                        else {
+                            $.ajax({
+                                type: "GET",
+                                url: '@Url.Action("SearchPatient", "AdminDash")',
+                                traditional: true,
+                                data: {
+                                    SearchValue: SearchValue, Filterselect: Filterselect, selectvalue: selectvalue
+                                    , partialName: partialName, currentstatus: currentstatus, currentpage: currentpage, pagesize: pagesize
+                                },
+                                success: function (data) {
+                                    $('#PartialViews').html(data);
+                                    console.log(data)
+                                },
+
+                                error: function (error) {
+                                    console.error(" ", error);
+                                }
+                            });
+                        }
+                    }
+
+                    else {
+                        window.location.href = '/Login/Patient_login';
+                    }
+                });
+
+            }
+
+            // -------------------------------------------------------------
+
+            // -------------------------------------------------------------
+
+            // -------------------------------------------------------------
+            $('#ModalFormsubmit').submit(function (event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '/AdminDash/CancelCase',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+
+                        $('#modalForm').modal('hide');
+                        window.location.href = "/AdminDash/AdminDash";
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            });
+            $('#modalForm').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+            });
+
+            // -------------------------------------------------------------
+
+            // -------------------------------------------------------------
+
+            $('#AssignCaseModalsubmit').submit(function (event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '/AdminDash/AssignCase',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+
+                        $('#AssignCaseModalsubmit').modal('hide');
+                        window.location.href = "/AdminDash/AdminDash";
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            });
+            $('#AssignCaseModal').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+            });
+            // -------------------------------------------------------------
+            $('#TransferModalSubmit').submit(function (event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '/AdminDash/TransferCase',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+
+                        $('#TransferModalSubmit').modal('hide');
+                        window.location.href = "/AdminDash/AdminDash";
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            });
+            $('#TransferModal').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+            });
+
+            // -------------------
+            // -------------------
+            $('#SendAgreementModalSubmit').submit(function (event) {
+                event.preventDefault();
+
+                console.log("jk")
+
+                var formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '/AdminDash/SendAgreement',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+
+                        $('#SendAgreementModalSubmit').modal('hide');
+                        window.location.href = "/AdminDash/AdminDash";
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            });
+            $('#SendAgreementModal').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+            });
+
+            // -------------------
+            $('#regiondropdownoftra').change(function () {
+
+
+                var regionid = $(this).val();
+
+                if (regionid != 0) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/AdminDash/GetPhysicianForTransfer", // Controller action to fetch models based on brand ID
+                        data: { regionid: regionid },
+                        success: function (response) {
+                            // Clear existing options
+                            $('#physiciandropdownoftra').empty();
+                            console.log(response.FirstName)
+                            $.each(response, function (index, item) {
+                                $('#physiciandropdownoftra').append($('<option>').text(item.firstName).attr('value', item.physicianId));
+                            });
+
+                        }
+                    });
+                }
+            });
+            // -------------------------------------------------------------
+
+            $('#ProfessionNameDropDown').change(function () {
+                var professionId = $(this).val();
+
+                if (professionId != 0) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/AdminDash/GetBusinessName", // Controller action to fetch models based on brand ID
+                        data: { professionId: professionId },
+                        success: function (response) {
+                            // Clear existing options
+                            $('#BusinessDropDown').empty();
+                            $('#BusinessDropDown').append($('<option>').text("Select BusinessMan").attr('value', 0));
+                            console.log("kpodkcosdk");
+                            $.each(response, function (index, item) {
+
+                                $('#BusinessDropDown').append($('<option>').text(item.vendorName).attr('value', item.vendorId));
+                            });
+
+                        }
+                    });
+                }
+                else {
+                    $('#BusinessDropDown').empty();
+                    $('#BusinessDropDown').append($('<option>').text("Select BusinessMan").attr('value', 0));
+                    $('#Contact').val("");
+                    $('#Email').val("");
+                    $('#Fax').val("");
+                }
+            });
+
+            $('#BusinessDropDown').change(function () {
+                var vendorId = $(this).val();
+
+                if (vendorId != 0) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/AdminDash/GetBusinessData", // Controller action to fetch models based on brand ID
+                        data: { vendorId: vendorId },
+                        success: function (response) {
+                            console.log(response);
+                            console.log(response.faxNumber);
+                            $('#Contact').val(response.phoneNumber);
+                            $('#Email').val(response.email);
+                            $('#Fax').val(response.faxNumber);
+
+                        }
+                    });
+
+                }
+                else {
+                    console.log("gbdjsd")
+                    $('#Contact').val("");
+                    $('#Email').val("");
+                    $('#Fax').val("");
+                }
+            });
+
+            // -------------------------------------------------------------
+            // -------------------------------------------------------------
+
+            // -------------------------------------------------------------
+
+            // ------------------
+            $('#regiondropdown').change(function () {
+                var regionid = $(this).val();
+                if (regionid != 0) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/AdminDash/GetPhysician", // Controller action to fetch models based on brand ID
+                        data: { regionid: regionid },
+                        success: function (response) {
+                            // Clear existing options
+                            $('#physiciandropdown').empty();
+                            console.log(response.FirstName)
+                            $.each(response, function (index, item) {
+                                $('#physiciandropdown').append($('<option>').text(item.firstName).attr('value', item.physicianId));
+                            });
+
+                        }
+                    });
+                }
+            });
+
+            // -------------------------------------------------------------
+            $('#BlockCaseModalsubmit').submit(function (event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '/AdminDash/BlockCase',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+
+                        $('#BlockCaseModalsubmit').modal('hide');
+                        window.location.href = "/AdminDash/AdminDash";
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            });
+            $('#BlockCaseModal').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+            });
+            // -------------------------------------------------------------
+
+
+            // -------------------------------------------------------------
+            $('#ClearCaseModalSubmit').submit(function (event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '/AdminDash/ClearCase',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+
+                        $('#ClearCaseModalSubmit').modal('hide');
+                        window.location.href = "/AdminDash/AdminDash";
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            });
+            $('#ClearCaseModal').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+            });
+            // -------------------------------------------------------------
+            //
+            // -------------------------------------------------------------
+
+            // -------------------------------------------------------------
+        });
+
+    </script>
+
+</body>
+</html>
+
+

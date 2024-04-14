@@ -1,0 +1,113 @@
+﻿@model List<DAL.ViewModel.SearchRecords>
+
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr class="text-center">
+                <th>Patient Name</th>
+                <th >Requester</th>
+                <th >Date Of Service</th>
+                <th >Close Case date</th>
+                <th >Email</th>
+                <th >Phone Number</th>
+                <th >Address</th>
+                <th >Zip</th>
+                <th >Request Status</th>
+                <th >Physician</th>
+                <th >Physician Note</th>
+                <th >Cancelled By Providor Note</th>
+                <th >Admin Note</th>
+                <th >Patient Note</th>
+                <th >Delete Permanently</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td>
+                        @item.PatientName
+                    </td>
+                    <td scope="row">
+                        @if (item.RequestTypeId == 4)
+                        {
+                            <span>Business</span>
+                        }
+                        @if (item.RequestTypeId == 1)
+                        {
+                            <span>Patient</span>
+                        }
+                        @if (item.RequestTypeId == 2)
+                        {
+                            <span>Family/Friend</span>
+                        }
+                        @if (item.RequestTypeId == 3)
+                        {
+                            <span>Concierge</span>
+                        }
+
+                    </td>
+                    <td s>@item.DateOfService</td>
+                    <td s>@item.CloseDate</td>
+                    <td s>@item.Email</td>
+                    <td s>@item.PhoneNumber</td>
+                    <td s>@item.Address</td>
+                    <td s>@item.Zip</td>
+                    <td s>@item.RequestStatus</td>
+                    <td s>@item.PhysicianName</td>
+                    <td s>@item.PhysicianNote</td>
+                    <td s>@item.CancelledByProvidor</td>
+                    <td s>@item.AdminNotes</td>
+                    <td s>@item.PatientNote</td>
+                    <td s>
+                        <div class="d-flex">
+                            <a class="btn btn-outline-info rounded me-2" asp-action="DeleteRecord" asp-route-id="@item.RequestId">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+<div class="pb-3 z-1">
+    <nav id="pagination" class="mb-5" aria-label="Page navigation">
+        <ul class="pagination justify-content-center mb-0">
+            @if (ViewBag.CurrentPage >= 1 && ViewBag.CurrentPage <= ViewBag.TotalPages)
+            {
+                int prevpage = Convert.ToInt32(ViewBag.CurrentPage) - 1;
+                int currpage = Convert.ToInt32(ViewBag.CurrentPage);
+                int nextpage = Convert.ToInt32(ViewBag.CurrentPage) + 1;
+                if (ViewBag.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" id="previous" data-page="@(prevpage)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                    </li>
+                }
+                for (int z = 0; z < 3; z++)
+                {
+                    if (currpage + z <= ViewBag.TotalPages)
+                    {
+                        <li class="page-item @(currpage + z ==ViewBag.CurrentPage ?"active":"")">
+                            <a class="page-link" id="current_@z" data-page="@(currpage + z)" aria-label="Current">
+                                <span>@(ViewBag.CurrentPage + z)</span>
+                            </a>
+                        </li>
+                    }
+                }
+                if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" id="next" data-page="@(nextpage)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </nav>
+</div>

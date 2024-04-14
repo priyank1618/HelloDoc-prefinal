@@ -1,0 +1,202 @@
+﻿﻿
+@{
+    ViewData["Title"] = "SearchRecords";
+    Layout = "~/Views/Shared/_AdminDash.cshtml";
+}
+
+<div class="container-fluid bg-light mb-5">
+    <div class="d-flex justify-content-between ">
+        <h4 class="my-3">Search Records</h4>
+        <div>
+            <button class="btn btn-outline-info mt-3" onclick="ExportFile()">Export Data to Excle</button>
+        </div>
+    </div>
+    <div class="mx-0 row px-4 border-bottom-0 border border-secondary rounded-top mt-3">
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <select class="form-select shadow-none statusSelect p-3" id="status" aria-label="Floating label select example">
+                <option value="0">Select Request Status</option>
+                <option value="1">New</option>
+                <option value="2">Pending</option>
+                <option value="3">Active</option>
+                <option value="4">Conclude</option>
+                <option value="5">To-close</option>
+                <option value="6">Unpaid</option>
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="text"
+                   class="form-control"
+                   id="patientName"
+                   placeholder="Last Name" />
+            <label for="floatingInput2" class="ms-2">Patient Name</label>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <select class="form-select shadow-none requestType p-3" id="requesttype" aria-label="Floating label select example">
+                <option value="0">Select Request Type</option>
+                <option value="1">Patient</option>
+                <option value="2">Family/Friend</option>
+                <option value="3">Concierge</option>
+                <option value="4">Business</option>
+
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="date" class="form-control shadow-none startingDate" id="FromDateOfService">
+            <label for="floatingInput" class="customlable">From Date Of Service</label>
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="mx-0 row px-4 border-top-0 border-bottom-0 border border-secondary rounded-top  pb-4 ">
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="date" class="form-control shadow-none endDate" id="ToDateOfService">
+            <label for="floatingInput" class="customlable">To Date Of Service</label>
+            <span class="text-danger"></span>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="text"
+                   class="form-control"
+                   id="providername"
+                   placeholder="name@InputType.com" />
+            <label for="floatingInput4" class="ms-2">Provider Name</label>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="text"
+                   class="form-control"
+                   id="Email"
+                   placeholder="name@InputType.com" />
+            <label for="floatingInput4" class="ms-2">Email</label>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="tel"
+                   class="form-control"
+                   id="PhoneNum"
+                   placeholder="PhoneNumber" />
+            <label for="floatingInput5" class="ms-2">Mobile Number</label>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end border-bottom-0 border-top-0 border border-secondary pb-2  pe-4">
+        <button class="btn btn-outline-info" onclick="RemoveFilters()">Clear</button>
+        <button class="btn btn-info mx-3" onclick="GetSearchRecord()">Search</button>
+    </div>
+    <div class="border-top-0 border table-responsive border-secondary rounded-bottom  px-3 h-50" id="PatientRecordsPartial">
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+    var currentpage = 1;
+    var pagesize = 5;
+    GetSearchRecord();
+
+    
+    function ExportFile() {
+        alert("call")
+        var status = $("#status").val();
+        switch (status) {
+            case "1":
+                status = [1];
+                break;
+            case "2":
+                status = [2];
+                break;
+            case "3":
+                status = [4, 5];
+                break;
+            case "4":
+                status = [6];
+                break;
+            case "5":
+                status = [3, 7, 8];
+                break;
+            case "6":
+                status = [9];
+                break;
+            default:
+                status = [];
+                break;
+        }
+        var requesttype = $("#requesttype").val();
+        var providername = $("#providername").val();
+        var email = $("#Email").val();
+        var PhoneNum = $("#PhoneNum").val();
+        var patientName = $("#patientName").val();
+        var fromDateOfService = $("#FromDateOfService").val();
+        var toDateOfService = $("#ToDateOfService").val();
+
+        var downloadUrl = "/AdminDash/ExcleFromRecords?status=" + status + "&requesttype=" + requesttype + "&providername=" + providername + "&Email=" + email + "&PhoneNum=" + PhoneNum + "&patientName=" + patientName ;
+        window.location.href = downloadUrl;
+    }
+
+    function GetSearchRecord() {
+        var status = $("#status").val();
+        switch (status) {
+            case "1":
+                status = [1];
+                break;
+            case "2":
+                status = [2];
+                break;
+            case "3":
+                status = [4, 5];
+                break;
+            case "4":
+                status = [6];
+                break;
+            case "5":
+                status = [3, 7, 8];
+                break;
+            case "6":
+                status = [9];
+                break;
+            default:
+                status = [];
+                break;
+        }
+
+        $(document).on("click", "#pagination a.page-link", function () {
+            console.log("Pagination link clicked!");
+            var id = $(this).attr("id");
+            currentpage = $("#" + id).data("page");
+            console.log("Current Page: " + currentpage);
+            GetSearchRecord();
+        });
+
+     
+
+
+        var requesttype = $("#requesttype").val();
+        var providername = $("#providername").val();
+        var email = $("#Email").val();
+        var PhoneNum = $("#PhoneNum").val();
+        var patientName = $("#patientName").val();
+        var fromDateOfService = $("#FromDateOfService").val();
+        var toDateOfService = $("#ToDateOfService").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/AdminDash/GetSearchRecords',
+            traditional: true,
+            data: {
+                status: status, requesttype: requesttype, providername: providername,
+                PhoneNum: PhoneNum, patientName: patientName, email: email, fromDateOfService
+                    : fromDateOfService, toDateOfService: toDateOfService, currentpage: currentpage,
+                pagesize: pagesize
+            },
+            success: function (response) {
+                $("#PatientRecordsPartial").html(response);
+            },
+            error: function (response) {
+                alert("Fail");
+            }
+        })
+    }
+    function RemoveFilters() {
+        $("#status").val('0');
+        $("#requesttype").val('0');
+        $("#Email").val('');
+        $("#PhoneNum").val('');
+        $("#providername").val('');
+        $("#patientName").val('');
+        GetSearchRecord();
+    }
+</script>

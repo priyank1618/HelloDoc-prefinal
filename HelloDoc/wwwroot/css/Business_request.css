@@ -1,0 +1,58 @@
+﻿.form-control:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid #39D7FA;
+}
+
+.lbl {
+    color: #39D7FA !important;
+}
+
+
+/* -----------nav css---------------------------- */
+.doct-logo img {
+    height: 5rem;
+    width: 10rem;
+}
+
+.dark-button {
+    margin-top: 1rem;
+}
+
+/* -----------nav css---------------------------- */
+
+.container {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.back {
+    width: 80%;
+    margin-top: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.fm {
+    padding-top: 0% !important;
+}
+.color {
+    background-color:#E9ECEF;
+}
+
+.white-bag {
+    background-color:#fff;
+}
+
+
+@media only screen and (max-width:567px) {
+    .container {
+        width: 100%;
+    }
+
+    .back {
+        width: 100%;
+        margin-top: 1rem;
+        margin-bottom: 0.8rem;
+    }
+}

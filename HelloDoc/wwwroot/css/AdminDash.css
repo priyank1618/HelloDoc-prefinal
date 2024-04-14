@@ -1,0 +1,69 @@
+﻿#accordionExample {
+    display:none
+}
+
+
+#divnew.active {
+    background-color:#203f9a !important;
+    color: white;
+}
+
+#divnew {
+    background-color: #e9eaef !important;
+    color: black;
+}
+
+#divpen.active {
+    background-color: #0dcaf0 !important;
+    color: white !important;
+}
+#divpen {
+    background-color: #e5f2f8 !important;
+    color: black;
+}
+
+#divact.active {
+    background-color: #228c20 !important;
+    color: white;
+}
+#divact {
+    background-color: #e9f0e8 !important;
+    color: black;
+}
+#divcon.active {
+    background-color: #da0f82 !important;
+    color: white;
+}
+#divcon {
+    background-color: #f7e6ee !important;
+    color: black;
+}
+#divclo.active {
+    background-color: #0370d7 !important;
+    color: white;
+}
+#divclo {
+    background-color: #e5eef5 !important;
+    color: black;
+}
+#divun.active{
+    background-color: #9966cd !important;
+    color: white;
+}
+#divun {
+    background-color: #efeef4 !important;
+    color: black;
+}
+
+@media only screen and (max-width:950px) {
+    
+
+    #table
+    {
+        display:none
+    }
+    
+    #accordionExample {
+        display: block
+    }
+}

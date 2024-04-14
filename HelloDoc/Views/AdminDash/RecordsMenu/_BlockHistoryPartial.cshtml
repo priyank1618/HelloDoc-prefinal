@@ -1,0 +1,33 @@
+﻿@model List<DAL.ViewModel.BlockHistory>
+<div class="mt-3 table-responsive">
+	<table class="table">
+
+		<thead class="table text-center">
+			<tr>
+				<th>Patient Name</th>
+				<th>Phone Number</th>
+				<th>Email</th>
+				<th>Created Date</th>
+				<th>Notes</th>
+				<th>Is Active</th>
+				<th class="d-flex justify-content-center">Action</th>
+			</tr>
+		</thead>
+		<tbody class="table-body text-center">
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>@item.PatientName</td>
+					<td>@item.PhoneNumber</td>
+					<td>@item.Email</td>
+					<td>@item.CreatedDate</td>
+					<td>@item.Notes</td>
+					<td style="text-align:center">
+						<input type="checkbox" style="height:15px;width:15px" @(item.IsActive == true ? "checked" : "") class="btn-outline-info" />
+					</td>
+					<td><a type="button" asp-action="Unblock" asp-route-id="@item.RequestId"  class="btn btn-outline-info">Unblock</a></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

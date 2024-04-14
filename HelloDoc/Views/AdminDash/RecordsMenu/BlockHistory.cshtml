@@ -1,0 +1,76 @@
+﻿@model List<DAL.ViewModel.BlockHistory>
+﻿@{
+    ViewData["Title"] = "BlockHistory";
+    Layout = "~/Views/Shared/_AdminDash.cshtml";
+}
+
+<div class="container-fluid" style="height:80vh!important">
+    <h4 class="py-3">Block history</h4>
+    <div class="mx-0 row px-4 border-bottom-0 border border-secondary rounded-top pt-3 pb-4 ">
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="text"
+                   class="form-control"
+                   id="Name"
+                   placeholder="First Name" />
+            <label for="floatingInput1" class="ms-2">Name</label>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="date" class="form-control shadow-none startingDate" id="Date">
+            <label for="floatingInput" class="customlable">Date</label>
+            <span class="text-danger"></span>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="text"
+                   class="form-control"
+                   id="Email"
+                   placeholder="name@InputType.com" />
+            <label for="floatingInput4" class="ms-2">Email</label>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 form-floating my-3">
+            <input type="tel"
+                   class="form-control"
+                   id="PhoneNum"
+                   placeholder="PhoneNumber" />
+            <label for="floatingInput5" class="ms-2">Mobile Number</label>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end border-bottom-0 border-top-0 border border-secondary pb-2  pe-4">
+        <button class="btn btn-outline-info" onclick="RemoveFilters()">Clear</button>
+        <button class="btn btn-info mx-3" onclick="GetBlockPatientRecord()">Search</button>
+    </div>
+    <div class="border-top-0 border border-secondary rounded-bottom  px-3 overflow-auto " id="ll">
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+    GetBlockPatientRecord();
+
+    function GetBlockPatientRecord() {
+
+        var name = $("#Name").val();
+        var phone = $("#PhoneNum").val();
+        var date = $("#Date").val();
+        var email = $("#Email").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/AdminDash/GetBlockedPatientRecords',
+            data: { name: name, date: date, email: email, phone: phone },
+            success: function (response) {
+                $("#ll").html(response);
+            },
+            error: function (response) {
+                alert("Fail");
+            }
+        })
+    }
+    function RemoveFilters() {
+        $("#Name").val('');
+        $("#Date").val('');
+        $("#Email").val('');
+        $("#PhoneNum").val('');
+        GetBlockPatientRecord();
+    }
+</script>

@@ -1,0 +1,96 @@
+﻿@model List<DAL.ViewModel.PatientHistory>
+﻿@{
+    ViewData["Title"] = "ExploreRecords";
+    Layout = "~/Views/Shared/_AdminDash.cshtml";
+}
+
+<div class="container-fluid  bg-body-secondary">
+    <div class="container " style="height:80vh !important">
+        <div class="justify-content-between d-flex  container-fluid mb-2 position-relative ">
+            <div class="mt-3">
+                <h3>Patient Records</h3>
+            </div>
+            <div>
+                <a asp-action="AdminDash" class="btn btn-outline-info mt-3"> ❮  Back </a>
+            </div>
+        </div>
+        <div class="bg-white border justify-content-center">
+            <table class="table">
+
+                <thead class="table-secondary text-center">
+                    <tr>
+                        <th>Client/Member</th>
+                        <th>Created Date</th>
+                        <th>Confirmation Num</th>
+                        <th>provider Name</th>
+                        <th>Conclude Date</th>
+                        <th>status</th>
+                        <th>Final Reports</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tbody class="text-center">
+                        <tr>
+                            <td scope="row">
+                                @item.ClientName
+                            </td>
+                            <td scope="row">@item.CreatedDate</td>
+                            <td scope="row">@item.ConfirmationNumber</td>
+                            <td scope="row">@item.ProvideName</td>
+                            <td scope="row">@item.ConcludeDate</td>
+                            <td scope="row">
+                                @if (item.Status == 1)
+                                {
+                                    <span>New</span>
+                                }
+                                @if (item.Status == 2)
+                                {
+                                    <span>Pending</span>
+                                }
+                                @if (item.Status == 4 || item.Status == 5)
+                                {
+                                    <span>Active</span>
+                                }
+                                @if (item.Status == 6)
+                                {
+                                    <span>Conclude</span>
+                                }
+                                @if (item.Status == 3 || item.Status == 7 || item.Status == 8)
+                                {
+                                    <span>To Close</span>
+                                }
+                                @if (item.Status == 9)
+                                {
+                                    <span>Unpaid</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IsFinalize == true)
+                                {
+                                    <a asp-action="GeneratePDF" asp-route-requeid="@item.RequestId" class="btn btn-outline-info rounded">View</a>
+                                }
+
+                            </td>
+                            <td>
+
+                                <div class="dropdown">
+                                    <a class="btn btn-outline-info text-decoration-none" dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
+                                        <a asp-action="ViewCase" asp-route-id="@item.RequestClientId" class="dropdown-item text-secondary">View Case</a>
+                                        <a asp-action="ViewUpload" asp-route-id="@item.RequestId" class="dropdown-item text-secondary"> Documents</a>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+
+                }
+            </table>
+        </div>
+        </div>
+    </div>

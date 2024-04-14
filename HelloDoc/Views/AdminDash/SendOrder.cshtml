@@ -1,0 +1,142 @@
+﻿@model DAL.ViewModel.SendOrder;
+@{
+    ViewData["Title"] = "SendOrder";
+    string controller = null;
+    if (ViewBag.IsPhysican)
+    {
+        Layout = "~/Views/Shared/_ProviderDashBoard.cshtml";
+         controller = "ProviderDashBoard";
+    }
+    if (!ViewBag.IsPhysican)
+    {
+        Layout = "~/Views/Shared/_AdminDash.cshtml";
+         controller = "AdminDash";
+    }
+}
+
+
+<div class="bg-body-secondary">
+<div class="mx-auto pt-4  pb-3" style="width:70%;">
+    <div class="d-flex justify-content-between my-2">
+        <h3>Send Order</h3><br />
+            @if (!ViewBag.IsPhysican)
+            {
+                <a asp-action="AdminDash" asp-controller="AdminDash"><button type="button" class="btn btn-primary btn  border border-info bg-transparent text-info shadow-none text-decoration-none ">Back</button></a>
+
+            }
+            else
+            {
+                <a asp-action="ProviderDashBoard" asp-controller="ProviderDashBoard"><button type="button" class="btn btn-primary btn  border border-info bg-transparent text-info shadow-none text-decoration-none ">Back</button></a>
+            }
+    </div>
+    <div class="shadow bg-white p-4">
+
+            <form method="post" asp-action="SendOrder" asp-route-id="@Model.requestid" asp-controller="@controller" enctype="multipart/form-data">
+
+            <div class="row">
+                <div class="col col-12 col-sm-6">
+                   
+                    <select class="form-select py-3 form-select" asp-for="Name" aria-label="Select Profession" id="ProfessionNameDropDown">
+                            <option selected value="0">Select Profession</option>
+                     @foreach (var item in Model.ProfessionName)
+                            {
+                                <option value="@item.HealthProfessionalId">@item.ProfessionName</option>
+                            }
+                       
+                    </select>
+                </div>
+              <div class="col col-12 col-sm-6 mb-3">
+
+                        <select class="form-select py-3 form-select" asp-for="vendorId" aria-label="Select Business" id="BusinessDropDown">
+                                <option selected value="0">Select BusinessName</option>
+                            </select>
+            </div>
+                </div>
+            <div class="row">
+                <div class="col col-sm-6 col-12">
+                    <div class="form-floating">
+                        <input type="text"
+                                   asp-for="BusinessContact"
+                               class="form-control"
+                               id="Contact"
+                               placeholder="Password" />
+                        <label for="floatingPassword">Business Contact</label>
+                    </div>
+                </div>
+                <div class="col col-sm-6  col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                            asp-for="Email"
+                               class="form-control"
+                               id="Email"
+                               placeholder="Password" />
+                        <label for="floatingPassword">Email</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                            asp-for="FaxNum"
+                               class="form-control"
+                               id="Fax"
+                               placeholder="name@example.com" />
+                        <label for="floatingInput">Fax Number</label>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col col-12 mb-3">
+                    <div class="form-floating">
+                        <textarea class="form-control"
+                        asp-for="Disciription"
+                                  placeholder="Leave a comment here"
+                                  id="floatingTextarea2"
+                                  style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Prescription or Orderdetails</label>
+                    </div>
+                </div>
+            </div> 
+            
+            <div class="row">
+                <div class="col col-12 mb-3 col-12 col-sm-6">
+                    <select class="form-select py-3 form-select" aria-label="Number of">
+                        <option selected>Not Required</option>
+                        <option data-value="1">One</option>
+                        <option data-value="2">Two</option>
+                        <option data-value="3">Three</option>
+                        <option data-value="4">four</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+            <div class="d-flex justify-content-end my-1">
+
+
+                <a>
+                    <button type="submit"  class="btn border-none bg-info p-2 text-light fw-semibold me-4" id="SaveBtn">
+                        Submit
+                    </button>
+                </a>
+                <button type="button" class="btn btn-danger border-none bg-danger p-2 text-light fw-semibold me-4">
+                    Cancle
+                </button>
+            </div>
+
+
+        </form>
+
+    </div>
+</div>
+     </div>
+
+
+
+   

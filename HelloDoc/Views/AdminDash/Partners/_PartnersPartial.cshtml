@@ -1,0 +1,36 @@
+﻿@model List<DAL.ViewModel.BusinessModel>
+<div class="bg-white border justify-content-center">
+    <table class="table">
+
+        <thead class="table-secondary text-center">
+            <tr>
+                <th >Profession</th>
+                <th >BusinessName</th>
+                <th>Email</th>
+                <th>Fax Number</th>
+                <th >Phone Number</th>
+                <th>Business Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+                <tbody class="text-center">
+                    <tr>
+                        <td>@item.profession</td>
+                        <td>@item.BusinessName</td>
+                        <td>@item.Email</td>
+                        <td>@item.FaxNumber</td>
+                        <td>@item.PhoneNum</td>
+                        <td>@item.BusinessContact</td>
+                    <td>
+                        <a asp-action="EditBusinessData" asp-route-id="@item.vendorid"  class="btn btn-outline-info">Edit</a>
+                        <a asp-action="DeleteBusinessData" class="btn btn-outline-info">Delete</a>
+                    </td>
+                     
+                    </tr>
+                </tbody>
+            
+        }
+    </table>
+</div>

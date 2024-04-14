@@ -1,0 +1,94 @@
+﻿
+
+@* asp-action="Agree" asp-controller="Request" method="post" asp-route-id="@Model.RequestId" *@
+
+@{
+    ViewData["Title"] = "ReviewAgreement";
+    Layout = "~/Views/Shared/_Layout-1.cshtml";
+     
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HelloDoc</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HelloDoc.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Patient_Request.css" />
+</head>
+
+<body>
+    
+    @* ------------------------------ *@
+    <div class="modal fade" id="canclemodal" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5  text-white" id="exampleModalLabel">Confirm Cancellation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form asp-action="CancelAgreement" asp-route-id="@ViewBag.requestid">
+                    <div class="modal-body">
+                        <p> Patient Name: @ViewBag.name</p>
+                        <div class="form-floating mt-3">
+                            <textarea class="form-control"  name="Notes" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">provide Additional Notes</label>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn btn-info">Confirm</button>
+                            <button type="button" data-bs-dismiss="modal" class="btn btn-outline-info ms-3">cancle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @* ------------------------------ *@
+   
+            <!-- -----------------form-------------------------- -->
+            <div class="container mt-4 ">
+                <section>To Provide best medical service, we cannot determine the cost right away. If you agree to our service, so we will provide care and follow-up untill all care is completed. So with this points,if you like us to provide care to you click "Agree" and we'll get started immediately, if you do not agree simply click "Cancel"'</section>
+                <div class="row mt-5">
+                    <div class="col-6 text-center">
+                <a asp-action="Agree" asp-controller="Request" asp-route-id="@ViewBag.requestid"> <button class="btn btn-success text-center text-white" type="submit">Agree</button></a>
+            </div>
+                    <div class="col-6 text-center">
+                <button class="btn btn-danger text-center text-white" onclick="openModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+         
+   
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Patient_request.js" asp-append-version="true"></script>
+</body>
+
+</html>
+<script>
+    function openModal(btn) {
+        console.log("Button clicked");
+
+        const myModal = document.getElementById("canclemodal");
+        var bsModal = new bootstrap.Modal(myModal);
+        bsModal.show();
+        const requestid = btn.getAttribute('data-requestid');
+        document.getElementById('requestid').value = requestid;
+        const name = btn.getAttribute('data-name');
+        document.getElementById('text').textContent = name;
+    }
+
+
+    
+
+
+</script>

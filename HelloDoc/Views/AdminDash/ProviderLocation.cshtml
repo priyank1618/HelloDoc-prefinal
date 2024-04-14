@@ -1,0 +1,40 @@
+﻿﻿@{
+    Layout = "~/Views/Shared/_AdminDash.cshtml";
+}
+
+<div id="map" style="height: 90vh; z-index: 1;"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var map = L.map('map', {
+            center: [21.0000, 78.0000], // india coordinates
+            zoom: 5,
+            zoomControl: true,
+            trackResize: true,
+        });
+        $.ajax({
+            type: "POST",
+            url: '/AdminDash/GetPhysicianLocation',
+            success: function (data) {
+                var result = JSON.stringify(data);
+                for (var i = 0; i < result.length; ++i) {
+                    var popup = '<b>Name:</b> ' + data[i].physicianName +
+                        '<br/><b>Latitude:</b> ' + data[i].latitude +
+                        '<br/><b>Longitude:</b> ' + data[i].longitude;
+
+                    L.marker([data[i].latitude, data[i].longitude])
+                        .bindPopup(popup)
+                        .addTo(map);
+                }
+            },
+            error: function (xhr) {
+                alert("Error has occurred..");
+            }
+        });
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    });
+</script>
+

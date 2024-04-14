@@ -1,0 +1,77 @@
+﻿
+* {
+    overflow-y: hidden;
+}
+/* -----------nav css---------------------------- */
+.doct-logo img {
+    height: 5rem;
+    width: 10rem;
+}
+
+.dark-button {
+    margin-top: 1rem;
+}
+
+/* -----------nav css---------------------------- */
+.cl-2 {
+    background-color: #F9F9F9;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-style {
+    width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1rem;
+    text-decoration: solid;
+    font-weight: 500;
+}
+
+.btn-1 {
+    background-color: #e8eaf1;
+    color: #4367d3;
+}
+
+.btn-2 {
+    background-color: #e5f3f8;
+    color: #00adef;
+}
+
+.btn-3 {
+    background-color: #e8f0e8;
+    color: #228b22;
+}
+
+.btn-4 {
+    background-color: #F7E5EE;
+    color: #d90f81;
+}
+
+.cl-2 {
+    height: 83.5vh;
+}
+
+.footer {
+    height: 7.5vh;
+}
+
+
+.btn-p {
+    position: fixed;
+    right: 10%;
+    top: 13%;
+}
+
+
+@media only screen and (max-width:567px) {
+
+    .footer {
+        display: none !important;
+    }
+
+    .cl-2 {
+        height: 91vh;
+    }
+}

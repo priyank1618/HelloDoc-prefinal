@@ -1,0 +1,118 @@
+﻿@model DAL.ViewModel.AddBusiness
+
+@{
+    ViewData["Title"] = "AddBusiness";
+    Layout = "~/Views/Shared/_AdminDash.cshtml";
+}
+<div class="bg-body-secondary container-fluid">
+<div class="container bg-body-secondary " style="height:80vh !important">
+    <div class="d-flex justify-content-between  mb-3 ">
+        <h4 class="mt-4">Add Business</h4>
+            <a asp-action="Partners"> <button class="btn btn-outline-info mt-4" id="backButtonVendors"> ❮  Back </button></a>
+    </div>
+    <div class="bg-white p-3">
+        <span class="fs-5 fw-bold w-100">Submit Information</span>
+        <form id="businessForm" asp-action="AddBusiness" method="post" >
+            <div class="row gx-4">
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="text"
+                        asp-for="BusinessName"
+                           class="form-control shadow-none inputs1"
+                           placeholder="Business Name"
+                          />
+                    <label for="BusinessName" class="ms-2">Business Name</label>
+                    <span class="text-danger error-BusinessName" asp-validation-for="BusinessName"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <select class="form-control py-2"  asp-for="Profession">
+                        <option value="0" selected disabled>Select Profession</option>
+                        @foreach (var item in ViewBag.HealthProfessionalTypes)
+                        {
+                            <option value="@item.HealthProfessionalId">@item.ProfessionName</option>
+                        }
+                    </select>
+                    <label for="SelectedProfession" class="ms-2"></label>
+                    <span asp-validation-for="Profession" class="text-danger error-SelectedRole"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="text"
+                           class="form-control"
+                           id="VenFax"
+                            asp-for=FaxNumber
+                           placeholder="Fax Number" />
+                    <label for="FaxNumber" class="ms-2">Fax Number</label>
+                    <span asp-validation-for="Profession" class="text-danger error-FaxNumber"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="tel"
+                           class="form-control shadow-none inputs1"
+      
+                           placeholder="Phone Number"
+                         asp-for="PhoneNum" />
+                    <label for="PhoneNumber" class="ms-2">Phone No.</label>
+                    <span class="text-danger error-PhoneNumber" asp-validation-for="PhoneNum"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="email"
+                           class="form-control shadow-none inputs1"
+              
+                           placeholder="Email"
+                         asp-for="Email" />
+                    <label for="EmailAddress" class="ms-2">Email</label>
+                    <span class="text-danger error-EmailAddress"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="text"
+                           class="form-control"
+                           id="Vencontact"
+                           name="BusinessContact"
+                           placeholder="Business Contact"
+                           asp-for="BusinessContact"/>
+                    <label for="BusinessContact" class="ms-2">Business Contact</label>
+                    <span class="text-danger error-BusinessContact" asp-validation-for="BusinessContact"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="text"
+                           class="form-control shadow-none inputs2"
+                         asp-for="street"
+                           placeholder="Street Address" />
+                    <label for="StreetAddress" class="ms-2">Street</label>
+                    <span class="text-danger error-StreetAddress"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="text"
+                           class="form-control shadow-none inputs2"
+                           asp-for="city"
+                           placeholder="City" />
+                    <label for="City" class="ms-2">City</label>
+                    <span class="text-danger error-City"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <select class="form-control shadow-none border border-secondary-50" id="SelectedRegion" asp-for="state">
+                        <option value="0" selected disabled>All Region</option>
+                        @foreach (var region in ViewBag.Regions)
+                        {
+                            <option value="@region.RegionId">@region.Name - (@region.Abbreviation)</option>
+                        }
+                    </select>
+                    <label for="StateId" class="ms-2">State</label>
+                      <span class="text-danger error-City" asp-validation-for="state"></span>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 form-floating my-3">
+                    <input type="text"
+                           class="form-control shadow-none inputs2"
+                           name="ZipCode"
+                           asp-for="zipcode"
+                           placeholder="Zip Code"
+                        />
+                    <label for="ZipCode" class="ms-2">Zip Code</label>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-info text-white mx-2 p-3">Save</button>
+                <button type="button" class="btn btn-outline-info text-body ms-2 p-3">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

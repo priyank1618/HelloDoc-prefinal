@@ -1,0 +1,16 @@
+﻿@model DAL.ViewModel.RoleMenuModel
+
+<div class="form-check form-check-inlin">
+
+    @foreach (var menu in Model.MenuList)
+    {
+        <div class="form-check form-check-inline">
+            <input class="form-check-input"
+                   type="checkbox"
+                   id="role-@menu.MenuId"
+                   name="rolemenu"
+                   value="@menu.MenuId" @(Model.RoleMenuIds.Contains(menu.MenuId) ? "checked" : "") />
+            <label class="form-check-label" for="region-@menu.MenuId">@menu.Name</label>
+        </div>
+    }
+</div>

@@ -1,0 +1,132 @@
+﻿/* login page css */
+
+.img-fluid {
+    height: 100vh;
+}
+
+.inp {
+    width: 33rem;
+    margin-left: auto;
+    margin-top: 3rem;
+    margin-right: auto;
+}
+
+/* ---------------------------- */
+h1 {
+    width: 33rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+img#img-logo {
+    height: 10rem !important;
+}
+
+  
+/* ---------------------------- */
+
+.btn {
+    width: 33rem;
+    margin-top: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    height: 3rem;
+}
+
+.no-border {
+    box-shadow: none !important;
+    border:none !important;
+}
+
+    .no-border:focus {
+        box-shadow: none !important;
+        border :none;
+    }
+
+/* ------------------------------------------------------------- */
+.back {
+    margin-left: -20rem;
+}
+/* ------------------------------------------------------------- */
+
+/* ------------------------blurry effect--------------------------------- */
+
+.row {
+    position: relative;
+}
+
+.right-side {
+    position: absolute;
+    width: 100vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-img {
+    background-image: url("../images/11116016_415.jpg");
+    filter: blur(6px);
+    margin-left: auto;
+    margin-right: auto;
+    opacity:0.4 !important;
+}
+
+/* ------------------------------------------------------------- */
+
+/* media query */
+
+@media only screen and (max-width: 567px) {
+    .row {
+        position: relative;
+    }
+
+    /* ------------------------- */
+    .logo img {
+        width: 16rem;
+        margin-top: -2rem;
+    }
+    /* ------------------------- */
+
+    .right-side {
+        position: absolute;
+    }
+
+    .main-img {
+        background-image: url("../images/11116016_415.jpg");
+        filter: blur(6px);
+    }
+
+    /* ------------------------------------- */
+    h1 {
+        width: 20rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* ------------------------------------- */
+
+    .inp {
+        width: 20rem;
+        margin-left: auto;
+        margin-top: 3rem;
+        margin-right: auto;
+    }
+
+    .btn {
+        width: 20rem;
+        margin-top: 1.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        height: 3rem;
+    }
+
+    /* --------------------------------------------- */
+    .back {
+        margin-left: -16rem;
+    }
+
+    .logo {
+        margin-bottom: 8rem;
+    }
+    /* --------------------------------------------- */
+}
