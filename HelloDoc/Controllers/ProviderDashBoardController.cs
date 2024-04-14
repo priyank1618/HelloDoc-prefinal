@@ -10,7 +10,9 @@ namespace HelloDoc.Controllers
     [CustomAuthorize(new string[] {"Physician"})]
     public class ProviderDashBoardController : Controller
     {
-        private readonly ApplicationDbContext _context;
+
+		#region variables
+		private readonly ApplicationDbContext _context;
         private readonly IProviderDashBoard _providerDashBoard;
         private readonly IAdminDashBoard _AdminDashBoard;
         private readonly IAdminAction _adminAction;
@@ -25,8 +27,10 @@ namespace HelloDoc.Controllers
             _adminAction = adminAction;
             _emailService = emailService;
         }
-     
-        public IActionResult ProviderDashBoard()
+		#endregion
+
+		#region ProviderDashBoard
+		public IActionResult ProviderDashBoard()
         {
             var email = HttpContext.Session.GetString("Email");
             int phyId = 0;
@@ -50,8 +54,39 @@ namespace HelloDoc.Controllers
             return View("DashBoard/ProviderDashBoard",DashData.ToList());
        
         }
+		public IActionResult SearchPatient(string SearchValue, string Filterselect,
+		   string selectvalue, string partialName, int[] currentstatus, int currentpage, int pagesize)
+		{
+			var email = HttpContext.Session.GetString("Email");
+			int phyId = 0;
+			if (email != null)
+			{
+				phyId = _context.Physicians.First(u => u.Email == email).PhysicianId;
+			}
 
-        public JsonResult CheckSession()
+			var FilterData = _AdminDashBoard.GetRequestDataPhy(SearchValue, Filterselect, selectvalue,
+			partialName, currentstatus, phyId).ToList();
+
+			int totalItems = FilterData.Count();
+			int totalPages = (int)Math.Ceiling((double)totalItems / pagesize);
+			if (SearchValue != null || selectvalue != null || Filterselect != null)
+			{
+				if (totalPages <= 1)
+				{
+					currentpage = 1;
+				}
+			}
+			var paginatedData = FilterData.Skip((currentpage - 1) * pagesize).Take(pagesize).ToList();
+			ViewBag.TotalPages = totalPages;
+			ViewBag.CurrentPage = currentpage;
+			return PartialView(partialName, paginatedData);
+
+		}
+
+		#endregion
+
+		#region checksession
+		public JsonResult CheckSession()
         {
             var request = HttpContext.Request;
             var token = request.Cookies["jwt"];
@@ -64,37 +99,10 @@ namespace HelloDoc.Controllers
                 return Json(new { sessionExists = true });
             }
         }
+		#endregion
 
-        public IActionResult SearchPatient(string SearchValue, string Filterselect,
-           string selectvalue, string partialName, int[] currentstatus, int currentpage, int pagesize)
-        {
-            var email = HttpContext.Session.GetString("Email");
-            int phyId = 0;
-            if (email != null)
-            {
-                 phyId = _context.Physicians.First(u => u.Email == email).PhysicianId;
-            }
-
-            var FilterData = _AdminDashBoard.GetRequestDataPhy(SearchValue, Filterselect, selectvalue,
-            partialName, currentstatus, phyId).ToList();
-
-            int totalItems = FilterData.Count();
-            int totalPages = (int)Math.Ceiling((double)totalItems / pagesize);
-            if (SearchValue != null || selectvalue != null || Filterselect != null)
-            {
-                if (totalPages <= 1)
-                {
-                    currentpage = 1;
-                }
-            }
-            var paginatedData = FilterData.Skip((currentpage - 1) * pagesize).Take(pagesize).ToList();
-            ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = currentpage;
-            return PartialView(partialName, paginatedData);
-
-        }
-
-        public IActionResult Accept(int id)
+		#region accept,Transfer,HouseCall,sendagreement,concludecare
+		public IActionResult Accept(int id)
         {
             var user = _context.Requests.FirstOrDefault(h => h.RequestId == id);
 
@@ -189,6 +197,7 @@ namespace HelloDoc.Controllers
             return RedirectToAction("ProviderDashBoard");
         }
 
+        //click on Housecall
         public IActionResult HouseCalled(int id)
         {
             var user = _context.Requests.FirstOrDefault(s => s.RequestId == id);
@@ -207,7 +216,14 @@ namespace HelloDoc.Controllers
 
             return View("DashBoard/ConcludeCare");
         }
+		#endregion
 
+        public IActionResult Scheduling()
+        {
+			var region = _context.Regions.ToList();
+            ViewBag.regions = region;
+            return View("Scheduling/Scheduling");
+	    }
 
-    }
+	}
 }

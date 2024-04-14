@@ -1150,6 +1150,7 @@ namespace HelloDoc.Controllers
             ViewBag.regions = region;
             return View();
         }
+
         [HttpGet]
         //this action is called with the region from ajax
         public IActionResult GetPhysicianShift(int region)

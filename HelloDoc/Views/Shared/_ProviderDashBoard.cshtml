@@ -94,7 +94,7 @@
                    
                    
                     <li class="nav-item">
-                        <a asp-action="Partners" class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Partners" ? "active" : "")">My Schedule</a>
+                        <a asp-action="Scheduling" class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Scheduling" ? "active" : "")">My Schedule</a>
                     </li>
         
                     <li class="nav-item">
@@ -126,13 +126,13 @@
 
 
                         <li class="nav-item">
-                            <a asp-action="Partners" class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Partners" ? "active" : "")">My Schedule</a>
+                            <a asp-action="Scheduling" class="nav-link text-info @(ViewContext.ActionDescriptor.RouteValues["action"] == "Scheduling" ? "active" : "")">My Schedule</a>
                         </li>
 
                         <li class="nav-item">
-                            <a asp-action="AdminProfile" asp-controller="AdminDash" style="text-decoration:none">
+                            <a asp-action="PhysicianProfile" asp-controller="Providercontroller" style="text-decoration:none">
                                 <button class="nav-link text-info
-                            @(ViewContext.ActionDescriptor.RouteValues["action"] == "AdminProfile" ? "active" : "")">
+                              @(ViewContext.ActionDescriptor.RouteValues["action"] == "AdminProfile" ? "active" : "")">
                                     My Profile
                                 </button>
                             </a>

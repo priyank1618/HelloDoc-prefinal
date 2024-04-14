@@ -1,11 +1,11 @@
 ﻿@{
-	Layout = "~/Views/Shared/_AdminDash.cshtml";
+	Layout = "~/Views/Shared/_ProviderDashBoard.cshtml";
 }
 
 <div class="container-fluid bg-body-secondary" style="height:80vh !important">
 	<div class="justify-content-between d-flex container-fluid mb-2 position-relative container my-3">
 		<div class="">
-			<h3 class="mt-2"> Scheduling </h3>
+			<h3 class="mt-2"> My Schedule </h3>
 		</div>
 		<div>
 			<a asp-action="AdminDash" class="btn btn-outline-info mt-2"> ❮  Back </a>
@@ -13,33 +13,6 @@
 	</div>
 
 	<div class="container bg-white pt-3 px-4 position-relative rounded-2">
-
-		<div class="p-0 m-0 d-flex justify-content-between">
-			<div class="d-flex border border-secondary  rounded align-items-center my-2 col-3">
-				<select class="form-control shadow-none border-0" id="SelectedRegion" name="SelectedStateId">
-					<option value="0">All</option>
-					<option value="1">alaska</option>
-					<option value="2">MaryLand</option>
-					<option value="3">NewYork</option>
-					<option value="4">Virginia</option>
-				</select>
-			</div>
-			<div class="d-flex mr-0 py-2 justify-content-end">
-				<a asp-action="MdOnCall">
-					<button class="btn btn-info mx-2 shadow-none" id="providerBtn" style="width:fit-content">
-						<span>Providers On Call</span>
-					</button>
-				</a>
-				<a asp-action="ReviewShift">
-					<button class="btn btn-info mx-2 shadow-none" id="adminBtn" style="width:fit-content">
-						<span>Shift for review</span>
-					</button>
-				</a>
-				<button class="btn btn-info mx-2 shadow-none" data-bs-toggle="modal" data-bs-target="#createShiftModal" id="adminBtn" style="width:fit-content">
-					<span>Add New Shift</span>
-				</button>
-			</div>
-		</div>
 		<div id="calendarTitle" class="calendar-current-date fs-4 fw-bolder"></div>
 		<div class="m-0 pe-2 py-0 d-flex justify-content-end my-3">
 			<div class="m-0 p-0 text-danger">
@@ -72,9 +45,10 @@
 				</button>
 			</div>
 			<div>
-				<button class="btn btn-info px-3 shadow-none" onclick="calendar.changeView('resourceTimeline')">Day</button>
-				<button class="btn btn-info px-3 shadow-none" onclick="calendar.changeView('resourceTimelineWeek')">Week</button>
-				<button class="btn btn-info px-3 shadow-none" onclick="calendar.changeView('dayGridMonth')">Month</button>
+
+				<button class="btn btn-success mx-2 shadow-none" data-bs-toggle="modal" data-bs-target="#createShiftModal" id="adminBtn" style="width:fit-content">
+					<span>Add New Shift</span>
+				</button>
 			</div>
 		</div>
 		<div id="calendar" class="bottom-0"></div>
@@ -142,9 +116,7 @@
 				dayMaxEvents: 4,
 				editable: true,
 				views: {
-					resourceTimelineDay: {
-						buttonText: 'Day',
-					},
+					
 					resourceTimelineWeek: {
 						buttonText: 'Week',
 						slotDuration: { days: 1 },
@@ -159,11 +131,7 @@
 							meridiem: 'short'
 						}
 					},
-					resourceTimelineMonth: {
-						buttonText: 'Month',
-						eventLimit: true, // Set the event limit to 3
-						eventLimitText: "More"
-					}
+				
 				},
 
 
@@ -405,7 +373,7 @@
 </script>
 
 
-<partial name="CreateShiftPartial"></partial>
+<partial name="Scheduling/CreateShiftPartial"></partial>
 
 <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">

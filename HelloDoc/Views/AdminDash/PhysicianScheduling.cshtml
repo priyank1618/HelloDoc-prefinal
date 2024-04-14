@@ -77,6 +77,8 @@
 				<button class="btn btn-info px-3 shadow-none" onclick="calendar.changeView('dayGridMonth')">Month</button>
         </div>
     </div>
+
+	@* div with id calander *@
     <div id="calendar" class="bottom-0"></div>
 </div>
 </div>
@@ -95,6 +97,7 @@
 			fetch('/AdminDash/GetPhysicianShift?region=' + region)
 				.then(response => response.json())
 				.then(data => {
+					console.log("data",data)
 					const resources = data.map(physician => ({
 						id: physician.physicianId,
 						title: physician.firstName,
@@ -105,7 +108,7 @@
 					fetch('/AdminDash/GetEvents?region=' + region)
 						.then(response => response.json())
 						.then(data => {
-							console.log(data)
+							console.log("events",data)
 							const events = data.map(event => ({
 								id: event.id,
 								resourceId: event.resourceId,
@@ -127,12 +130,14 @@
 		}
 
 	
+
 		function initializeCalendar(resources, events) {
 			$('#SelectedRegion').on('change', function () {
 				const newRegion = $(this).val();
 				getPhysicianShift(newRegion);
 			});
-			console.log(resources)
+
+
 			calendar = new FullCalendar.Calendar(calendarEl, {
 				height: '25rem',
 				schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
